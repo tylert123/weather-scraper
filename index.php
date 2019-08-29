@@ -7,20 +7,20 @@
         
         $city = str_replace(' ','', $_GET['city']);
         
-        $file_headers = @get_headers("http://www.weather-forecast.com/locations/".$city."/forecasts/latest");
+        $file_headers = @get_headers("https://www.weather-forecast.com/locations/".$city."/forecasts/latest");
         
         if($file_headers[0] == 'HTP/1.1 404 Not Found') {
             
             $error = "That city could not be found";
         } else {
             
-        $forecastPage = file_get_contents("http://www.weather-forecast.com/locations/".$city."/forecasts/latest");
+        $forecastPage = file_get_contents("https://www.weather-forecast.com/locations/".$city."/forecasts/latest");
                     
-        $pageArray = explode('3 Day Weather Forecast Summary:</b><span class="read-more-small"><span class="read-more-content"> <span class="phrase">', $forecastPage);
+        $pageArray = explode('(1&ndash;3 days)</span><p class="b-forecast__table-description-content"><span class="phrase">', $forecastPage);
             
             if (sizeof ($pageArray) > 1) {
         
-                $secondPageArray = explode('</span></span></span>', $pageArray[1]);
+                $secondPageArray = explode('</span></p></td>', $pageArray[1]);
                 
                 if (sizeof($secondPageArray) > 1) {
 
@@ -57,7 +57,7 @@
       
           html {
               
-              background: url(/background.jpg) no-repeat center center fixed;
+              background: url(background.jpg) no-repeat center center fixed;
               -webkit-background-size: cover;
               -moz-background-size: cover;
               -o-background-size: cover;
